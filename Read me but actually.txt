@@ -1,0 +1,47 @@
+- Discord music bot -
+Notice : This is a personal project, if the code is horrible, im not good at programing, if it dosent work, there are people
+hundreds of times more compatent than me, who can help you out ; tldr, probably use something elese, however if you dont mind my noobie-ness
+i would love to hear your feedback, thanks :)
+
+This bot is meant to serivce 1 server and 1 server only, it is not meant for multiple servers, do not come and complain that it only works
+one server.
+
+Before Use install all required libraries by using the lib bash file
+
+Manually install FFMPEG, if you dont already have it and make sure and make sure to setup the path system variable 
+https://www.youtube.com/watch?v=r1AtmY-RMyQ&ab_channel=TroubleChute <-- see this
+
+to get the bot working find the login.json file and input your discord bot token in the ID space the guild the bot is to be used in in the guild space
+and the music console channel in the channel space.
+
+Default Prefix is %
+ie 
+%play https://www.youtube.com/watch?v=sHzdsFiBbFc
+
+Commands :
+
+play <youtube url>
+plays the given youtube link
+
+join <none>
+joins the call
+
+leave <none>
+leaves the call
+
+skip <none>
+skips the current song
+
+pause <none>
+pauses current playback
+
+resume <none>
+resumes paused playback
+
+---commands just for testing ---
+
+echo <string>
+echos back string
+
+test <any>
+used for testing new commands

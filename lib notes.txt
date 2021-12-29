@@ -1,0 +1,3 @@
+discord.js @discordjs/voice @discordjs/opus | required to get code to work with javascript
+static-ffmpeg libsodium-wrapper | ffmpeg does... something...? its really important.
+YTDL-core is used for downloading videos and sax m3u8stream and miniget are dependinces
