@@ -1,12 +1,10 @@
 const Discord = require('discord.js');
 const { Client, Intents } = require('discord.js');
-
 const discordVoice = require('@discordjs/voice');
-const { AudioPlayerStatus } = require('@discordjs/voice');
 
 const fs = require('fs');
 const events = require('events');
-const id = require('./login.json').id;
+const login = require('./login.json');
 
 const client = new Client({
   intents: [
@@ -18,16 +16,11 @@ const client = new Client({
 
 //Varibles and  Modules -----------------------------------------------------------------------------------------------
 
-//global varible declaring
+//varible declaring
 global.queuestring = [];
 global.queue = [];
 global.player = discordVoice.createAudioPlayer();
-
-//varible declaring
 QueueEvents = new events.EventEmitter();
-
-//command prefix
-const prefix = '%';
 
 //allow acess to commands and background files
 client.commands = new Discord.Collection();
@@ -42,15 +35,19 @@ function GetModuleFiles(path) {
 }
 //get Required Modules
 GetModuleFiles('commands/audiocommands');
-GetModuleFiles('commands/archivecommands');
+GetModuleFiles('background/panel');
+GetModuleFiles('background/player');
+GetModuleFiles('background/queuer');
 GetModuleFiles('background');
+//GetModuleFiles('commands/archivecommands');
+
 
 //Command Processor --------------------------------------------------------------------------------------------------------------------------------
 
 client.on("messageCreate", (message) => {
-  if (!message.content.startsWith(prefix) || message.author.bot) return;
+  if (!message.content.startsWith(login.Prefix) || message.author.bot) return;
 
-  let args = message.content.slice(prefix.length).split(/ +/);
+  let args = message.content.slice(login.Prefix.length).split(/ +/);
   const command = args.shift().toLowerCase();
   args = args.pop();
   console.log(`Message from ${message.author.username}: ${message.content}`);
@@ -68,33 +65,9 @@ client.on("messageCreate", (message) => {
   }
 });
 //constant backround stuff
-function runbackground() {
-  client.commands.get('queuehandler').execute();
-  client.commands.get('songplayer').execute();
-}
-setInterval(runbackground, 1000);
-
 client.once('ready', () => {
-  console.log('Running');
-  client.commands.get('controlpanel').execute(client);
-  client.commands.get('queuepanel').execute(client, QueueEvents);
-  //client.commands.get('archive').execute(client);
-  //client.commands.get('print').execute(client);
-  global.player.on(AudioPlayerStatus.Idle, () => {
-  global.queue.shift();
-    QueueEvents.emit('update');
-  });
-  //very important
-  /*
-    global.queuestring.push("https://www.youtube.com/watch?v=7nQ2oiVqKHw");
-    global.queuestring.push("https://www.youtube.com/watch?v=829pvBHyG6I");
-    global.queuestring.push('https://www.youtube.com/watch?v=czhd1eHv6ac');
-    global.queuestring.push('https://www.youtube.com/watch?v=vDX_xlZoFwY');
-    global.queuestring.push('https://www.youtube.com/watch?v=JVFHWJdEc3k');
-    global.queuestring.push('https://www.youtube.com/watch?v=9DKwJ-yxQpQ');
-    
-  */
-    global.queuestring.push('https://www.youtube.com/watch?v=9EQcFrYzX2U');
+  client.commands.get('setupbackground').execute(client, QueueEvents);
 });
 
-client.login(id);
+
+client.login(login.id);
